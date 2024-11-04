@@ -43,8 +43,6 @@ services:
       KAFKA_CONNECTIONS_MAX_IDLE_MS: 60000
     networks:
       - kafka-net
-    extra_hosts:
-      - "host.docker.internal:82.112.245.171"
 
   broker2:
     image: confluentinc/cp-kafka:latest
@@ -73,8 +71,6 @@ services:
       KAFKA_CONNECTIONS_MAX_IDLE_MS: 60000
     networks:
       - kafka-net
-    extra_hosts:
-      - "host.docker.internal:82.112.245.171"
 
   kafka-ui:
     image: provectuslabs/kafka-ui
