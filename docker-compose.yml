@@ -43,6 +43,8 @@ services:
       KAFKA_CONNECTIONS_MAX_IDLE_MS: 60000
     networks:
       - kafka-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   broker2:
     image: confluentinc/cp-kafka:latest
@@ -89,8 +91,6 @@ services:
       - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
     networks:
       - kafka-net
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
 
 networks:
   kafka-net:
