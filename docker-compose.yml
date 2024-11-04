@@ -7,12 +7,13 @@ services:
     user: root
     volumes:
       - ./data/zookeeper:/var/lib/zookeeper/data
-      - ./data/zookeeper/log:/var/lib/zookeeper/log
+      - ./data/zookeeper/log:/var/lib/zookeeper/log # Ensure log directory is mounted
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
-      ZOOKEEPER_SNAPSHOT_SIZE_FACTOR: 0.33
-      ZOOKEEPER_COMMIT_LOG_COUNT: 500
+      # ZOOKEEPER_LOG4J_ROOT_LOGLEVEL: DEBUG # Add more logging
+      ZOOKEEPER_SNAPSHOT_SIZE_FACTOR: 0.33 # Set snapshot size factor
+      ZOOKEEPER_COMMIT_LOG_COUNT: 500 # Set commit log count
 
   broker1:
     image: confluentinc/cp-kafka:latest
@@ -23,21 +24,19 @@ services:
       - ./data/kafka1:/var/lib/kafka/data
     ports:
       - "9092:9092"
-      - "29092:29092"
-      - "39092:39092"
     depends_on:
       - zookeeper
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: EXTERNAL:PLAINTEXT,INTERNAL:PLAINTEXT,LOCAL:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: EXTERNAL://broker1:9092,INTERNAL://broker1:29092,LOCAL://localhost:39092
-      KAFKA_LISTENERS: EXTERNAL://0.0.0.0:9092,INTERNAL://0.0.0.0:29092,LOCAL://0.0.0.0:39092
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://srv631882.hstgr.cloud:9092,PLAINTEXT_INTERNAL://broker1:29092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_INTERNAL://0.0.0.0:29092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 2
-      KAFKA_LOG4J_LOGGERS: "kafka.controller=DEBUG,kafka.producer.async.DefaultEventHandler=DEBUG,state.change.logger=DEBUG"
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=DEBUG,kafka.producer.async.DefaultEventHandler=DEBUG,state.change.logger=DEBUG" # Add more logging
 
   broker2:
     image: confluentinc/cp-kafka:latest
@@ -48,21 +47,19 @@ services:
       - ./data/kafka2:/var/lib/kafka/data
     ports:
       - "9093:9092"
-      - "29093:29093"
-      - "39093:39093"
     depends_on:
       - zookeeper
     environment:
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: EXTERNAL:PLAINTEXT,INTERNAL:PLAINTEXT,LOCAL:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: EXTERNAL://broker2:9093,INTERNAL://broker2:29093,LOCAL://localhost:39093
-      KAFKA_LISTENERS: EXTERNAL://0.0.0.0:9092,INTERNAL://0.0.0.0:29093,LOCAL://0.0.0.0:39093
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://srv631882.hstgr.cloud:9093,PLAINTEXT_INTERNAL://broker2:29093
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_INTERNAL://0.0.0.0:29093
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 2
-      KAFKA_LOG4J_LOGGERS: "kafka.controller=DEBUG,kafka.producer.async.DefaultEventHandler=DEBUG,state.change.logger=DEBUG"
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=DEBUG,kafka.producer.async.DefaultEventHandler=DEBUG,state.change.logger=DEBUG" # Add more logging
 
   kafka-ui:
     image: provectuslabs/kafka-ui
