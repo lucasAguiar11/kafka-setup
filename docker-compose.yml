@@ -12,6 +12,7 @@ services:
 
   broker1:
     image: confluentinc/cp-kafka:latest
+    user: root
     container_name: broker1
     restart: unless-stopped
     volumes:
@@ -35,6 +36,7 @@ services:
     image: confluentinc/cp-kafka:latest
     container_name: broker2
     restart: unless-stopped
+    user: root
     volumes:
       - ./data/kafka2:/var/lib/kafka/data
     ports:
