@@ -25,6 +25,8 @@ services:
       - ./data/kafka1:/var/lib/kafka/data
     ports:
       - "9092:9092"
+      - "29092:29092"
+      - "39092:39092"
     depends_on:
       - zookeeper
     environment:
@@ -51,6 +53,8 @@ services:
       - ./data/kafka2:/var/lib/kafka/data
     ports:
       - "9093:9093"
+      - "29093:29093"
+      - "39093:39093"
     depends_on:
       - zookeeper
     environment:
