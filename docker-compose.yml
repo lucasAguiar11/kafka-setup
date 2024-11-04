@@ -41,7 +41,7 @@ services:
     networks:
       - kafka-net
     extra_hosts:
-      - "broker1:host.docker.internal"
+      - "broker1:172.17.0.1"
 
   broker2:
     image: confluentinc/cp-kafka:latest
@@ -68,7 +68,7 @@ services:
     networks:
       - kafka-net
     extra_hosts:
-      - "broker2:host.docker.internal"
+      - "broker2:172.17.0.1"
 
   kafka-ui:
     image: provectuslabs/kafka-ui
