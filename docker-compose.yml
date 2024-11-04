@@ -72,7 +72,7 @@ services:
     networks:
       - kafka-net
     extra_hosts:
-      - "host.docker.internal:172.17.0.1"
+      - "host.docker.internal:host-gateway"
 
   kafka-ui:
     image: provectuslabs/kafka-ui
@@ -90,7 +90,7 @@ services:
     networks:
       - kafka-net
     extra_hosts:
-      - "host.docker.internal:172.17.0.1"
+      - "host.docker.internal:host-gateway"
 
 networks:
   kafka-net:
