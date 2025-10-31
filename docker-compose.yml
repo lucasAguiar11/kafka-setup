@@ -1,7 +1,7 @@
 version: "3"
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:latest
+    image: confluentinc/cp-zookeeper:7.4.0
     container_name: zookeeper
     restart: unless-stopped
     user: root
@@ -17,7 +17,7 @@ services:
       - kafka-net
 
   broker1:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:7.4.0
     user: root
     container_name: broker1
     restart: unless-stopped
@@ -45,7 +45,7 @@ services:
       - kafka-net
 
   broker2:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:7.4.0
     container_name: broker2
     restart: unless-stopped
     user: root
